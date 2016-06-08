@@ -1,12 +1,18 @@
-<div class="navbar navbar-fixed-top">
+<div class="navbar navbar-fixed-top" ng-if="$ctrl.loaded"
+ ng-class="{'navbar-inverse':$ctrl.darkTheme}">
     <div class="container">
         <div class="navbar-header">
             <a href="/" class="navbar-brand">Expense Tracker</a>
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li><a href="#/">Home</a></li>
+                <li><a href="#/">Home </a></li>
+                <li><a href="#/userpref">Preferences</a></li>
                 <li><a href="#/logout">Logut</a></li>
+            </ul>
+
+            <ul class="nav navbar-right navbar nav">
+                <li class="navbar-text">Welcome {{$ctrl.userPreferences.displayName}}</li>
             </ul>
         </div>
     </div>
