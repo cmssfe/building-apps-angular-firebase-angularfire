@@ -11,7 +11,6 @@ angular.module('app').component('editUserPref', {
         ];
 
         ctrl.userPrefData.$bindTo($scope,"$ctrl.userPreferences").then(function(){
-            debugger;
             if(!ctrl.userPreferences.theme){
                 ctrl.userPreferences.theme=ctrl.themes[0];
             }

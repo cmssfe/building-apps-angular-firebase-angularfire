@@ -13,10 +13,19 @@ app.run(function ($rootScope, $location) {
 app.config(function ($routeProvider) {
     $routeProvider
         .when('/home', {
-            template: "<home></home>",
+            template: "<home categories='$resolve.categories' expenses-in-order='$resolve.expensesInOrder'></home>",
             resolve: {
-                currentAuth: function (auth) {
-                    return auth.$requireAuth();
+                expensesInOrder: function (fbRef, expenseList, auth) {
+                    return auth.$requireAuth().then(function () {
+                        var query=fbRef.getExpensesRef().orderByChild('date');
+                        return expenseList(query).$loaded();
+                    });
+                },
+                categories: function (fbRef, $firebaseArray, auth) {
+                    return auth.$requireAuth().then(function () {
+                        var query=fbRef.getCategoriesRef().orderByChild('name');
+                        return $firebaseArray(query).$loaded();
+                    });
                 }
             }
         })
@@ -26,6 +35,17 @@ app.config(function ($routeProvider) {
                 userPreferences: function (fbRef, $firebaseObject, auth) {
                     return auth.$requireAuth().then(function () {
                         return $firebaseObject(fbRef.getPreferencesRef()).$loaded();
+                    });
+                }
+            }
+        })
+        .when('/categories', {
+            template: "<category-list categories='$resolve.categories'></category-list>",
+            resolve: {
+                categories: function (fbRef, $firebaseArray, auth) {
+                    return auth.$requireAuth().then(function () {
+                        var query=fbRef.getCategoriesRef().orderByChild('name');
+                        return $firebaseArray(query).$loaded();
                     });
                 }
             }

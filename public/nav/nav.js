@@ -8,7 +8,6 @@ angular.module('app').component('nav', {
         ctrl.userPreferences = $firebaseObject(fbRef.getPreferencesRef());
         ctrl.userPreferences.$loaded().then(function (data) {
             ctrl.loaded=true;
-            debugger;
             ctrl.darkTheme = ctrl.userPreferences.theme === 'dark';
         });
 
