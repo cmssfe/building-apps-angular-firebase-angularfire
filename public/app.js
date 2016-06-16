@@ -10,8 +10,6 @@ app.run(function ($rootScope, $location) {
     });
 });
 
-
-
 app.config(function ($routeProvider) {
     $routeProvider
         .when('/home', {
